@@ -29,12 +29,17 @@ class Welcome implements ActionListener {
 		l1.setBounds(30,140,1165,430);
 		frame.add(l1); // finally, add label on welcome frame.
 		
-		JButton b = new JButton("Click Here To Continue");
+		JButton b = new JButton("Login");
 		b.setBackground(Color.BLACK);
 		b.setForeground(Color.WHITE);
-		b.setBounds(525,530,180,40);
+		b.setBounds(450,530,180,40);
 		b.addActionListener(this);  // perform action on button click.
 		
+		JButton b1 = new JButton("Sign Up");
+		b1.setBackground(Color.BLACK);
+		b1.setForeground(Color.WHITE);
+		b1.setBounds(700,530,180,40);
+		b1.addActionListener(this);  // perform action on button click.
 		
 		JLabel id = new JLabel();
 		id.setBounds(0,0,1165,650); // keep length as image length.
@@ -46,8 +51,8 @@ class Welcome implements ActionListener {
 		lid.setForeground(Color.blue);
 		lid.setFont(new Font("Serif",Font.PLAIN,63));
 		id.add(lid);
-		
 		id.add(b);
+		id.add(b1);
 		frame.add(id);
 		
 		frame.getContentPane().setBackground(Color.WHITE); // set frame background color
@@ -78,7 +83,7 @@ class Welcome implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 			frame.setVisible(false);
-			 new Login();  // open login page on button click
+			 new Dept_login();  // open login page on button click
 		
 	}
 	

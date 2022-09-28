@@ -1,0 +1,121 @@
+package placement_major;
+
+	import java.awt.*;
+	import javax.swing.*;
+	import java.awt.event.*;
+	import java.sql.*;
+
+
+	public class Dept_login  implements ActionListener {
+
+		JFrame frame;
+		JLabel l1, l2,l3;
+		JTextField t1,t3;
+		JPasswordField t2;
+		JButton b1, b2;
+		
+		Dept_login(){
+		
+			frame = new JFrame("Login");
+			frame.setBackground(Color.WHITE);
+			frame.setLayout(null);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setLocation(380,230);
+			
+			l1 = new JLabel("E-Mail");
+			l1.setBounds(40,20,100,30);
+			frame.add(l1);
+			
+			
+			l2 = new JLabel("Password");
+			l2.setBounds(40,70,100,30);
+			frame.add(l2);
+			
+			l3 = new JLabel("Department");
+			l3.setBounds(40,120,100,30);
+			frame.add(l3);
+			
+			t1 = new JTextField();
+			t1.setBounds(150,20,150,30);
+			frame.add(t1);
+			
+			
+			t2 = new JPasswordField();
+			t2.setBounds(150,70,150,30);
+			frame.add(t2);
+			
+			t3 = new JTextField();
+			t3.setBounds(150,120,150,30);
+			frame.add(t3);
+			
+			ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("login.png"));
+			Image i2 = i1.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT); // resize our image size.
+			ImageIcon i3 = new ImageIcon(i2);  // convert image into imageicon
+			JLabel l3 =  new JLabel(i3); // set imageicon on label
+			l3.setBounds(350,20,150,150);
+			frame.add(l3); // finally, add label on welcome frame.
+			
+			b1 = new JButton("Login");
+			b1.setBackground(Color.BLACK);
+			b1.setForeground(Color.WHITE);
+			b1.setBounds(40,180,120,30);
+			b1.setFont(new Font("serif",Font.BOLD,15));
+			b1.addActionListener(this);  // perform action on button click.
+			frame.add(b1);
+			
+			
+			b2 = new JButton("Cancel");
+			b2.setBackground(Color.BLACK);
+			b2.setForeground(Color.WHITE);
+			b2.setBounds(180,180,120,30);
+			b2.setFont(new Font("serif",Font.BOLD,15));
+			b2.addActionListener(this);  // perform action on button click.
+			frame.add(b2);
+			
+			
+			frame.getContentPane().setBackground(Color.WHITE);
+			
+			frame.setVisible(true);
+			frame.setSize(600,300);
+			
+			
+		}
+		
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			if(e.getSource() == b2) {
+				frame.setVisible(false);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			}
+			
+			try {
+				DBconnection c1 = new DBconnection();
+				String email = t1.getText();
+				String pass = t2.getText();
+				String dep = t3.getText();
+				
+				String q = "select * from signup where email='"+email+"' and password='"+pass+"'and Department='"+dep+"' ";
+				
+				ResultSet rs = c1.st.executeQuery(q); // used to retrieve data from database using conn.s.executeQuery()
+				
+				if(rs.next()) {  //used to match username,password and Department
+					new Csit_dept().frame.setVisible(true); // open details page and make visible also. 
+					frame.setVisible(false); // close login page
+				}else {
+					JOptionPane.showMessageDialog(null, "Invalid login"); // when not matched.
+					frame.setVisible(false); // close login page
+				}
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		
+		public static void main(String[] args) {
+			Dept_login Dlogin =  new Dept_login();
+		}
+		
+	}
+
